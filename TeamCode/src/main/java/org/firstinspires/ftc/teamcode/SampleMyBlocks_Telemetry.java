@@ -1,4 +1,5 @@
 /*
+
 v01 dated 12/20/2020
 
 This FTC myBlocks example allows the Blocks user to modify the Telemetry
@@ -13,27 +14,32 @@ https://first-tech-challenge.github.io/FtcRobotController/6.0.1/RobotCore/index.
 
 The top-level API Documentation for the FTC SDK is here:
 https://first-tech-challenge.github.io/FtcRobotController/
+
+
+v02 dated 12/20/2020
+
+Add myBlock "telemetryAction" to allow cycle testing.
+
 */
 
 package org.firstinspires.ftc.teamcode;
 
 import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
 import org.firstinspires.ftc.robotcore.external.ExportToBlocks;
-// Don't need to import Telemetry class, provided with BlocksOpModeCompanion.
 
-public class W_myBlocks extends BlocksOpModeCompanion {
+public class SampleMyBlocks_Telemetry extends BlocksOpModeCompanion {
 
     // This Annotation must appear immediately before any myBlock method.
     // Optional to add a comment, tooltip, and/or parameterLabels.
     // Comment must be a single text line, concatenation (+) allowed.
     @ExportToBlocks (
-    comment = "Sets Telemetry refresh rate, which resets to default 250 ms " +
-    "every time OpMode runs.  Optional: add pause in Blocks to view " +
-    "confirming message.",
-    tooltip = "Set Telemetry refresh rate",
-    parameterLabels = {"Refresh rate (milliseconds)"}
+    comment = "Sets Telemetry refresh rate or interval, which resets to " +
+    "default 250 ms every time OpMode runs.  Optional: add pause in Blocks " +
+    "to view confirming message.",
+    tooltip = "Set Telemetry refresh interval",
+    parameterLabels = {"Refresh interval (milliseconds)"}
     )
-    // This method has 1 input and no outputs (keyword void).
+    // This myBlock method has 1 input and no outputs (keyword void).
     public static void setTelemetryRate (int myRate) {
 
         // Get and store the existing (default) minimum interval between
@@ -54,5 +60,39 @@ public class W_myBlocks extends BlocksOpModeCompanion {
 
     }   // end of method setTelemetryRate()
 
-}   // end of class W_myBlocks
+
+
+    // initialize toggle indicating end of current Telemetry interval
+    static boolean readyToBroadcast = false;
+ 
+   @ExportToBlocks (
+    comment = "At each scheduled Telemetry update, return value 1 " +
+              "to increment counter.  Otherwise return 0.",
+    tooltip = "Action before Telemetry update"
+    )
+    // This myBlock method has no inputs and one output of type int (integer).
+    public static int telemetryAction() {
+
+        // Create a named list of actions to be run when specified.
+        Runnable myActions = new Runnable()  {
+            @Override
+            public void run()  {
+                // one action here, could be a list
+                readyToBroadcast = true;        // toggle: end of interval
+            }
+        };
+    
+        // The method addAction() runs the indicated action list only if
+        // the Telemetry interval (of the Blocks OpMode) has elapsed.
+        telemetry.addAction (myActions);    
+
+        if (readyToBroadcast) {             // Telemetry interval has elapsed
+            readyToBroadcast = false;       // reset the interval toggle
+            return 1;                       // send a 1 for cycle counter
+        }
+        else return 0;                      // send 0 if interval not elapsed
+
+    }   // end of method telemetryAction()
+
+}   // end of class W_myBlocks_Telemetry_v02
 

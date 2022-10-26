@@ -18,6 +18,7 @@ package org.firstinspires.ftc.teamcode;
 // OBJ and Android Studio automatically create these import statements.
 import org.firstinspires.ftc.robotcore.external.ExportToBlocks;
 import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 
 // BlocksOpModeCompanion provides many useful FTC objects to this class.
 public class SampleMyBlocks_v04 extends BlocksOpModeCompanion {
@@ -31,9 +32,9 @@ public class SampleMyBlocks_v04 extends BlocksOpModeCompanion {
     // This is a myBlock method with one input and one output.
     // The keyword 'final' indicates a Java constant: a variable that cannot change value.
     // Java constants are traditionally ALL CAPS.
-    public static int inchesToCountsRobotA (double inchesToDriveA) {
+    public static int inchesToCountsR16Example (double inchesToDriveA) {
         final double WHEEL_DIAMETER_A = 4.0;        // inches
-        final double COUNTS_PER_ROTATION_A = 1120;  // CPR for NeveRest 40
+        final double COUNTS_PER_ROTATION_A = DriveConstants.TICKS_PER_REV;
         // call the shared utility method
         int countsToDriveA = calculateCounts (inchesToDriveA, COUNTS_PER_ROTATION_A, WHEEL_DIAMETER_A);
         return countsToDriveA;                      // give the result to Blocks
@@ -47,9 +48,9 @@ public class SampleMyBlocks_v04 extends BlocksOpModeCompanion {
         )
     // This is another myBlock method, also with one input and one output.
     // Both myBlocks will appear in the Blocks menu for this Java Class.
-    public static int inchesToCountsRobotB (double inchesToDriveB) {
+    public static int inchesToCountsR19Example (double inchesToDriveB) {
         final double WHEEL_DIAMETER_B = 3.0;        // inches
-        final double COUNTS_PER_ROTATION_B = 537.6; // CPR for NeveRest Orbital 20
+        final double COUNTS_PER_ROTATION_B = DriveConstants.TICKS_PER_REV;
         // call the shared utility method
         int countsToDriveB = calculateCounts (inchesToDriveB, COUNTS_PER_ROTATION_B, WHEEL_DIAMETER_B);
         return countsToDriveB;                      // give the result to Blocks
