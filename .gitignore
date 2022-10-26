@@ -85,3 +85,15 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+# Log/OS Files
+*.log
+
+# Android Studio generated files and folders
+.externalNativeBuild/
+.cxx/
+*.apk
+output.json
+
+# Android Profiling
+*.hprof
